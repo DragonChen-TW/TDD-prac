@@ -1,4 +1,4 @@
-package main
+package stocks
 
 // Author:	DragonChen https://github.com/dragonchen-tw/
 // Title:	profolio package

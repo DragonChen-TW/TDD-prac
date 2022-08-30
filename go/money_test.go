@@ -1,6 +1,7 @@
 package main
 
 import (
+	s "tdd/stocks"
 	"testing"
 )
 
@@ -8,40 +9,33 @@ import (
 // Title:	ch1 Money Test
 // Date:	2022/08/30
 
-func assertEqual(t *testing.T, expected, actual Money) {
+func assertEqual(t *testing.T, expected, actual s.Money) {
 	if expected != actual {
 		t.Errorf("Expected [%+v] Got [%+v]", expected, actual)
 	}
 }
 
-func TestMultiplicationInDollars(t *testing.T) {
-	fiver := Money{amount: 5, currency: "USD"}
-	actualResult := fiver.Times(2)
-	expectedResult := Money{amount: 10, currency: "USD"}
-	assertEqual(t, expectedResult, actualResult)
-}
-
-func TestMultiplicationInEuros(t *testing.T) {
-	tenEuros := Money{amount: 10, currency: "EUR"}
+func TestMultiplication(t *testing.T) {
+	tenEuros := s.NewMoney(10, "EUR")
 	actualResult := tenEuros.Times(2)
-	expectedResult := Money{amount: 20, currency: "EUR"}
+	expectedResult := s.NewMoney(20, "EUR")
 	assertEqual(t, expectedResult, actualResult)
 }
 
 func TestDivision(t *testing.T) {
-	originalMoney := Money{amount: 4002, currency: "KRW"}
+	originalMoney := s.NewMoney(4002, "KRW")
 	actualMoneyAfterDivision := originalMoney.Divide(4)
-	expectedMoneyAfterDivision := Money{amount: 1000.5, currency: "KRW"}
+	expectedMoneyAfterDivision := s.NewMoney(1000.5, "KRW")
 	assertEqual(t, expectedMoneyAfterDivision, actualMoneyAfterDivision)
 }
 
 func TestAddition(t *testing.T) {
-	var profolio Profolio
-	var profolioInDollars Money
+	var profolio s.Profolio
+	var profolioInDollars s.Money
 
-	fiveDollars := Money{amount: 5, currency: "USD"}
-	tenDollars := Money{amount: 10, currency: "USD"}
-	fifteenDollars := Money{amount: 15, currency: "USD"}
+	fiveDollars := s.NewMoney(5, "USD")
+	tenDollars := s.NewMoney(10, "USD")
+	fifteenDollars := s.NewMoney(15, "USD")
 
 	profolio = profolio.Add(fiveDollars)
 	profolio = profolio.Add(tenDollars)

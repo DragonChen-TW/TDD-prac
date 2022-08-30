@@ -1,4 +1,4 @@
-package main
+package stocks
 
 // Author:	DragonChen https://github.com/dragonchen-tw/
 // Title:	money package
@@ -7,6 +7,10 @@ package main
 type Money struct {
 	amount   float64
 	currency string
+}
+
+func NewMoney(amount float64, currency string) Money {
+	return Money{amount: amount, currency: currency}
 }
 
 func (m Money) Times(multiplier int) Money {
