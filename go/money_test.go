@@ -30,16 +30,16 @@ func TestDivision(t *testing.T) {
 }
 
 func TestAddition(t *testing.T) {
-	var profolio s.Profolio
-	var profolioInDollars s.Money
+	var portfolio s.Portfolio
+	var portfolioInDollars s.Money
 
 	fiveDollars := s.NewMoney(5, "USD")
 	tenDollars := s.NewMoney(10, "USD")
 	fifteenDollars := s.NewMoney(15, "USD")
 
-	profolio = profolio.Add(fiveDollars)
-	profolio = profolio.Add(tenDollars)
-	profolioInDollars = profolio.Evaluate("USD")
+	portfolio = portfolio.Add(fiveDollars)
+	portfolio = portfolio.Add(tenDollars)
+	portfolioInDollars = portfolio.Evaluate("USD")
 
-	assertEqual(t, fifteenDollars, profolioInDollars)
+	assertEqual(t, fifteenDollars, portfolioInDollars)
 }

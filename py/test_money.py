@@ -1,46 +1,10 @@
 import unittest
-import functools
-import operator
-
-class Money:
-    def __init__(self, amount, currency):
-        self.amount = amount
-        self.currency = currency
-    
-    def __eq__(self, other):
-        return self.amount == other.amount and self.currency == other.currency
-    
-    def times(self, multiplier):
-        return Money(self.amount * multiplier, self.currency)
-    
-    def divide(self, divisor):
-        return Money(self.amount / divisor, self.currency)
-
-class Profolio:
-    def __init__(self):
-        self.moneys = []
-    
-    def add(self, *moneys):
-        self.moneys.extend(moneys)
-    
-    def evaluate(self, currency):
-        total = 0
-        for m in self.moneys:
-            total += m.amount
-        total = functools.reduce(
-            operator.add,
-            [m.amount for m in self.moneys],
-            0
-        )
-        return Money(total, currency)
+# 
+from money import Money
+from portfolio import Portfolio
 
 class TestMoney(unittest.TestCase):
-    def testMultiplicationInDollars(self):
-        fiveDollars = Money(5, "USD")
-        tenDollars = Money(10, "USD")
-        self.assertEqual(tenDollars, fiveDollars.times(2))
-    
-    def testMultiplicationEuros(self):
+    def testMultiplication(self):
         tenEuros = Money(10, 'EUR')
         twentyEuros = Money(20, 'EUR')
         self.assertEqual(twentyEuros, tenEuros.times(2))
@@ -54,9 +18,9 @@ class TestMoney(unittest.TestCase):
         fiveDollars = Money(5, "USD")
         tenDollars = Money(10, "USD")
         fifteenDollars = Money(15, "USD")
-        profolio = Profolio()
-        profolio.add(fiveDollars, tenDollars)
-        self.assertEqual(fifteenDollars, profolio.evaluate('USD'))
+        portfolio = Portfolio()
+        portfolio.add(fiveDollars, tenDollars)
+        self.assertEqual(fifteenDollars, portfolio.evaluate('USD'))
 
 if __name__ == '__main__':
     unittest.main()
