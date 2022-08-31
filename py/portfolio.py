@@ -6,7 +6,6 @@ from money import Money
 class Portfolio:
     def __init__(self):
         self.moneys = []
-        self._EURToUSD = 1.2
     
     def add(self, *moneys):
         self.moneys.extend(moneys)
@@ -25,5 +24,11 @@ class Portfolio:
     def __convert(self, money, currency):
         if money.currency == currency:
             return money.amount
-        else:
-            return money.amount * self._EURToUSD
+
+        exchangeRates = {
+            'EUR->USD': 1.2,
+            'USD->KRW': 1100,
+        }
+
+        key = f'{money.currency}->{currency}'
+        return money.amount * exchangeRates[key]
