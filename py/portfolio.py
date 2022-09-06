@@ -10,15 +10,15 @@ class Portfolio:
     def add(self, *moneys):
         self.moneys.extend(moneys)
     
-    def evaluate(self, currency):
+    def evaluate(self, bank, currency):
         total = 0
         failures = []
 
         for m in self.moneys:
             try:
-                total += self.__convert(m, currency)
-            except KeyError as ke: # there is no matched conversion
-                failures.append(str(ke.args[0]))
+                total += bank.convert(m, currency).amount
+            except Exception as ex: # there is no matched conversion
+                failures.append(str(ex.args[0]))
 
         if len(failures) > 0: # there is an error
             failureMessage = ','.join(failures)

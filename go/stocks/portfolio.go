@@ -13,28 +13,30 @@ func (p Portfolio) Add(money Money) Portfolio {
 	return p
 }
 
-func (p Portfolio) Evaluate(currency string) (Money, error) {
+func (p Portfolio) Evaluate(bank Bank, currency string) (*Money, error) {
 	total := 0.0
 	failedConversions := make([]string, 0)
 	for _, m := range p {
-		value, ok := convert(m, currency)
-		if !ok {
+		if converterMoney, ok := bank.Convert(m, currency); ok != nil {
 			failedConversions = append(failedConversions, m.currency+"->"+currency)
 		} else {
-			total += value
+			total += converterMoney.amount
 		}
 	}
 
-	if len(failedConversions) == 0 {
-		return NewMoney(total, currency), nil
-	} else {
+	if len(failedConversions) != 0 {
 		failures := "["
 		for _, f := range failedConversions {
 			failures += f + ","
 		}
 		failures += "]"
-		return NewMoney(0, ""), errors.New("Missing exchange rate(s):" + failures)
+
+		return nil, errors.New("Missing exchange rate(s):" + failures)
 	}
+
+	var result Money
+	result = NewMoney(total, currency)
+	return &result, nil
 }
 
 func convert(m Money, currency string) (float64, bool) {
