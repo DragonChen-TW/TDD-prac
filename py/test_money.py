@@ -61,17 +61,14 @@ class TestMoney(unittest.TestCase):
             portfolio.evaluate(self.bank, 'Kalganid')
     
     def testConversion(self):
-        bank = Bank()
-        bank.addExchangeRate('EUR', 'USD', 1.2)
         tenEuros = Money(10, 'EUR')
         expectedMoney = Money(12, 'USD')
-        self.assertEqual(expectedMoney, bank.convert(tenEuros, 'USD'))
+        self.assertEqual(expectedMoney, self.bank.convert(tenEuros, 'USD'))
 
     def testConversionWithMissingExchangeRate(self):
-        bank = Bank()
         tenEuros = Money(10, 'EUR')
         with self.assertRaisesRegex(Exception, 'EUR->Kalganid'):
-            bank.convert(tenEuros, 'Kalganid')
+            self.bank.convert(tenEuros, 'Kalganid')
 
 if __name__ == '__main__':
     unittest.main()
